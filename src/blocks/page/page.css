@@ -1,0 +1,12 @@
+.page {
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  text-rendering: optimizeLegibility;
+  /* min-width: 320px; */
+  /* margin: 0 auto; */
+  background-color: #000;
+  color: white;
+}
+
+/*
+*,*::before,*::after {outline: 1px solid red}
+*/

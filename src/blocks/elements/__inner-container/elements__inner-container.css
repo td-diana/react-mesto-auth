@@ -1,0 +1,8 @@
+.elements__inner-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 15px 0px 21px;
+  width: 246px;
+  box-sizing: border-box;
+}
