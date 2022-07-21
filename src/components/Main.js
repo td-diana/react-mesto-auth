@@ -1,4 +1,4 @@
-function Main({onEditAvatar}) {
+function Main({ onEditAvatar, onAddPlace, onEditProfile }) {
   return (
     <main>
       <section className="profile">
@@ -11,16 +11,25 @@ function Main({onEditAvatar}) {
               onClick={onEditAvatar}
             ></button>
           </div>
-          <div className="profile__info">
-            <div className="profile__inner-container">
-              <h1 className="profile__name"></h1>
-              <button className="profile__button-edit" type="button"></button>
-            </div>
-            <h2 className="profile__about-name"></h2>
-          </div>
         </div>
-        <button className="profile__button-add" type="button"></button>
+        <div className="profile__info">
+          <div className="profile__container">
+            <h1 className="profile__name"></h1>
+            <button
+              type="button"
+              className="profile__button-edit"
+              onClick={onEditProfile}
+            ></button>
+          </div>
+          <h2 className="profile__about-name"></h2>
+        </div>
+        <button
+          type="button"
+          className="profile__button-add"
+          onClick={onAddPlace}
+        ></button>
       </section>
+
       <section className="elements">
         <ul className="elements__list"></ul>
       </section>

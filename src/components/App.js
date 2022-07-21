@@ -2,43 +2,90 @@ import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from './PopupWithForm'
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
 
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true)
+    setEditAvatarPopupOpen(true);
+  }
+
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setAddPlacePopupOpen(true);
   }
 
   function closeAllPopups() {
-    setEditAvatarPopupOpen(false)    
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
   }
 
   return (
     <div className="page">
       <Header />
-      <Main onEditAvatar={handleEditAvatarClick} />
-      <Footer />
+      <Main
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+      />
+      <Footer />      
       <PopupWithForm
-        name='avatar-edit'
-        title='Обновить аватар'
+        name="popup-avatar"
+        title="Обновить аватар"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-<input
-                type="url"
-                className="popup__input popup__input_avatar-link"
-                id="form-input-avatar-link"
-                name="userAvatar"
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span className="popup__input-error form-input-avatar-link-error"></span>
-
+        <input
+          type="url"
+          className="popup__input popup__input_avatar-link"
+          id="form-input-avatar-link"
+          name="userAvatar"
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span className="popup__input-error form-input-avatar-link-error"></span>
       </PopupWithForm>
 
-      <div className="popup popup-edit">
+      <PopupWithForm
+        name="popup-edit"
+        title="Редактировать профиль"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          name="userName"
+          type="text"
+          className="popup__input popup__field-name"
+          id="name"
+          placeholder="Имя"
+          minlength="2"
+          maxlength="40"
+          required
+        />
+        <span className="popup__input-error name-error"></span>
+        <input
+          name="userAbout"
+          type="text"
+          className="popup__input popup__field-about-name"
+          id="aboutname"
+          placeholder="О себе"
+          minlength="2"
+          maxlength="200"
+          required
+        />
+        <span className="popup__input-error aboutname-error"></span>
+      </PopupWithForm>
+
+      {/* <div className="popup popup-edit">
         <div className="popup__container">
           <button className="popup__button-close" type="button"></button>
           <form className="popup__form" name="edit" novalidate>
@@ -74,9 +121,37 @@ function App() {
             </fieldset>
           </form>
         </div>
-      </div>
+      </div> */}
 
-      <div className="popup popup-add">
+      <PopupWithForm
+        name="popup-add"
+        title="Новое место"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          name="name"
+          type="text"
+          className="popup__input popup__field-title"
+          id="title"
+          placeholder="Название"
+          minlength="2"
+          maxlength="30"
+          required
+        />
+        <span className="popup__input-error title-error"></span>
+        <input
+          name="link"
+          type="url"
+          className="popup__input popup__field-url"
+          id="url"
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span className="popup__input-error url-error"></span>
+      </PopupWithForm>
+
+      {/* <div className="popup popup-add">
         <div className="popup__container">
           <button className="popup__button-close" type="button"></button>
           <form className="popup__form" id="add" name="add" novalidate>
@@ -111,8 +186,9 @@ function App() {
             </fieldset>
           </form>
         </div>
-      </div>
-      <div className="popup popup_img">
+      </div> */}
+
+      {/* <div className="popup popup_img">
         <div className="popup__container popup__container-img">
           <div className="popup__img-box">
             <img className="popup__images" src="#" alt="" />
@@ -120,7 +196,7 @@ function App() {
             <button type="button" className="popup__button-close"></button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="popup popup-avatar">
         <div className="popup__container">
@@ -148,7 +224,10 @@ function App() {
         </div>
       </div> */}
 
-      <div className="popup popup-confirm">
+      <PopupWithForm name='popup-confirm"' title="Вы уверены?" />
+      <ImagePopup />
+
+      {/* <div className="popup popup-confirm">
         <div className="popup__container">
           <button
             className="popup__button-close"
@@ -162,7 +241,7 @@ function App() {
             </button>
           </form>
         </div>
-      </div>
+      </div> */}
 
       <template className="elements__template">
         <li className="elements__card">
