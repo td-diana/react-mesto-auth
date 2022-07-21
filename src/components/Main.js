@@ -2,8 +2,8 @@ import React from 'react'
 import { api } from '../utils/Api'
 import Card from './Card'
 
-function Main({ onEditAvatar, onAddPlace, onEditProfile }) {
-  const [userName, setUserName] = React.useState('sadf')
+function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardClick }) {
+  const [userName, setUserName] = React.useState()
   const [userDescription, setUserDescription] = React.useState()
   const [userAvatar, setUserAvatar] = React.useState()
   const [cards, setCards] = React.useState([])
@@ -61,9 +61,14 @@ React.useEffect(() => {
 
       <section className="elements">
         <ul className="elements__list">
-        {cards.map(({id, ...props}) => <Card key={id} {...props} />)}
+        {cards.map(({id, ...props}) => <Card key={id} {...props}
+            card={ {id, ...props} }
+            onCardClick={onCardClick}
+            />)
+          }
         </ul>
       </section>
+      
     </main>
   );
 }
