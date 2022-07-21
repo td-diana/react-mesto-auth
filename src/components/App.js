@@ -243,7 +243,7 @@ function App() {
         </div>
       </div> */}
 
-      <template className="elements__template">
+      {/* <template className="elements__template">
         <li className="elements__card">
           <img className="elements__img" />
           <div className="elements__inner-container">
@@ -255,7 +255,7 @@ function App() {
             <button className="elements__icon-delete" type="button"></button>
           </div>
         </li>
-      </template>
+      </template> */}
     </div>
   );
 }

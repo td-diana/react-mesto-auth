@@ -1,10 +1,12 @@
 import React from 'react'
 import { api } from '../utils/Api'
+import Card from './Card'
 
 function Main({ onEditAvatar, onAddPlace, onEditProfile }) {
   const [userName, setUserName] = React.useState('sadf')
   const [userDescription, setUserDescription] = React.useState()
   const [userAvatar, setUserAvatar] = React.useState()
+  const [cards, setCards] = React.useState([])
 
   React.useEffect(() => {
     api.getUserInfo().then((data) => {      
@@ -13,6 +15,17 @@ function Main({ onEditAvatar, onAddPlace, onEditProfile }) {
       setUserAvatar(data.avatar)
     })
 }, [])
+
+React.useEffect(() => {
+  api.getInitialCards().then((data) => {    
+    setCards(data.map((item) => ({
+      id: item._id,
+      link: item.link,
+      name: item.name,
+      likes: item.likes
+    })))
+  })
+})
 
   return (
     <main>
@@ -47,7 +60,9 @@ function Main({ onEditAvatar, onAddPlace, onEditProfile }) {
       </section>
 
       <section className="elements">
-        <ul className="elements__list"></ul>
+        <ul className="elements__list">
+        {cards.map(({id, ...props}) => <Card key={id} {...props} />)}
+        </ul>
       </section>
     </main>
   );
