@@ -1,7 +1,6 @@
 import React from "react";
 
 function Card(props) {
-
   function handleCardClick() {
     props.onCardClick(props.card);
   }
@@ -18,7 +17,9 @@ function Card(props) {
         <h2 className="elements__title">{props.card.name}</h2>
         <div className="elements__like-container">
           <button type="button" className="elements__icon-like"></button>
-          <span className="elements__like-counter">{props.card.likes.length}</span>
+          <span className="elements__like-counter">
+            {props.card.likes.length}
+          </span>
         </div>
       </div>
       <button className="elements__icon-delete"></button>

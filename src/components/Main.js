@@ -1,39 +1,52 @@
-import React from 'react'
-import { api } from '../utils/Api'
-import Card from './Card'
+import React from "react";
+// import { api } from "../utils/Api";
+import Card from "./Card";
 
-function Main({ onEditAvatar, onAddPlace, onEditProfile, onCardClick }) {
-  const [userName, setUserName] = React.useState()
-  const [userDescription, setUserDescription] = React.useState()
-  const [userAvatar, setUserAvatar] = React.useState()
-  const [cards, setCards] = React.useState([])
+function Main({
+  onEditAvatar,
+  onAddPlace,
+  onEditProfile,
+  onCardClick,
+  cards,
+  userName,
+  userDescription,
+  userAvatar,
+}) {
+  // const [userName, setUserName] = React.useState("");
+  // const [userDescription, setUserDescription] = React.useState("");
+  // const [userAvatar, setUserAvatar] = React.useState("");
+  // const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api.getUserInfo().then((data) => {      
-      setUserName(data.name)
-      setUserDescription(data.about)
-      setUserAvatar(data.avatar)
-    })
-}, [])
+  // React.useEffect(() => {
+  //   api
+  //     .getUserInfo()
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setUserDescription(data.about);
+  //       setUserAvatar(data.avatar);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
-React.useEffect(() => {
-  api.getInitialCards().then((data) => {    
-    setCards(data.map((item) => ({
-      id: item._id,
-      link: item.link,
-      name: item.name,
-      likes: item.likes
-    })))
-  })
-})
+  // React.useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((data) => {
+  //       setCards(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <main>
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar-container">
-            <img className="profile__avatar" alt="" style={{ backgroundImage: `url(${userAvatar})` }}  />
-            {/* src={userAvatar} */}
+            <img
+              className="profile__avatar"
+              alt=""
+              style={{ backgroundImage: `url(${userAvatar})` }}
+            />
             <button
               type="button"
               className="profile__button-avatar-edit"
@@ -61,14 +74,11 @@ React.useEffect(() => {
 
       <section className="elements">
         <ul className="elements__list">
-        {cards.map(({id, ...props}) => <Card key={id} {...props}
-            card={ {id, ...props} }
-            onCardClick={onCardClick}
-            />)
-          }
+          {cards.map((card) => (
+            <Card key={card._id} card={card} onCardClick={onCardClick} />
+          ))}
         </ul>
       </section>
-      
     </main>
   );
 }

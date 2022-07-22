@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { api } from "../utils/Api";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -11,6 +12,10 @@ function App() {
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+  const [cards, setCards] = React.useState([]);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -35,6 +40,26 @@ function App() {
     setSelectedCard(card);
   }
 
+  React.useEffect(() => {
+    api
+      .getUserInfo()
+      .then((data) => {
+        setUserName(data.name);
+        setUserDescription(data.about);
+        setUserAvatar(data.avatar);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="page">
       <Header />
@@ -43,6 +68,10 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onCardClick={onCardClick}
+        cards={cards}
+        userName={userName}
+        userDescription={userDescription}
+        userAvatar={userAvatar}
       />
       <Footer />
 
@@ -77,8 +106,8 @@ function App() {
           className="popup__input popup__field-name"
           id="name"
           placeholder="Имя"
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
           required
         />
         <span className="popup__input-error name-error"></span>
@@ -88,8 +117,8 @@ function App() {
           className="popup__input popup__field-about-name"
           id="aboutname"
           placeholder="О себе"
-          minlength="2"
-          maxlength="200"
+          minLength="2"
+          maxLength="200"
           required
         />
         <span className="popup__input-error aboutname-error"></span>
@@ -108,8 +137,8 @@ function App() {
           className="popup__input popup__field-title"
           id="title"
           placeholder="Название"
-          minlength="2"
-          maxlength="30"
+          minLength="2"
+          maxLength="30"
           required
         />
         <span className="popup__input-error title-error"></span>
