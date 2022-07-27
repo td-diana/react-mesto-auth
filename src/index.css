@@ -26,7 +26,6 @@
 @import url(./blocks/profile/__inner-container/profile__inner-container.css);
 @import url(./blocks/profile/__container/profile__container.css);
 
-
 @import url(./blocks/elements/__element/elements__card.css);
 
 @import url(./blocks/elements/__img/elements__img.css);
@@ -61,3 +60,5 @@
 @import url(./blocks/elements/__like-counter/elements__like-counter.css);
 @import url(./blocks/profile/__button-avatar-edit/profile__button-avatar-edit.css);
 @import url(./blocks/profile/__avatar-container/profile__avatar-container.css);
+
+@import url(./blocks/elements/__icon-delete/_status/elements__icon-delete_status_hidden.css);
