@@ -8,6 +8,7 @@ import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -86,6 +87,15 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err));
+  }
+
+  function handleAddPlaceSubmit(cardData) {
+    api.addUserCard(cardData)
+      .then((newCard) => {
+        setCards([newCard, ...cards])
+        closeAllPopups()
+      })
+      .catch((err) => console.log(err))
   }
 
   React.useEffect(() => {
@@ -187,8 +197,13 @@ function App() {
           />
           <span className="popup__input-error aboutname-error"></span>
         </PopupWithForm> */}
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
-        <PopupWithForm
+        {/* <PopupWithForm
           name="popup-add"
           title="Новое место"
           buttonText="Создать"
@@ -215,7 +230,8 @@ function App() {
             required
           />
           <span className="popup__input-error url-error"></span>
-        </PopupWithForm>
+        </PopupWithForm> */}
+
         <PopupWithForm
           name="popup-confirm"
           title="Вы уверены?"
