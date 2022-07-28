@@ -3,8 +3,9 @@
   height: 120px;
   border-radius: 50%;
   padding: 0;
-  background-image: url(../../../images/avatar.jpg);
+  /* background-image: url(../../../images/avatar.jpg); */
   background-size: cover;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 600px) {

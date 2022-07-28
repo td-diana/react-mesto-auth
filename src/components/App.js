@@ -6,6 +6,8 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -66,6 +68,26 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function onUpdateUser(userData) {
+    api
+      .setUserInfoApi(userData)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function onUpdateAvatar(userData) {
+    api
+      .handleUserAvatar(userData)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
   React.useEffect(() => {
     api
       .getUserInfo()
@@ -105,7 +127,7 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
+        {/* <PopupWithForm
           name="popup-avatar"
           title="Обновить аватар"
           buttonText="Сохранить"
@@ -121,9 +143,21 @@ function App() {
             required
           />
           <span className="popup__input-error form-input-avatar-link-error"></span>
-        </PopupWithForm>
+        </PopupWithForm> */}
 
-        <PopupWithForm
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={onUpdateAvatar}
+        />
+
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={onUpdateUser}
+        />
+
+        {/* <PopupWithForm
           name="popup-edit"
           title="Редактировать профиль"
           buttonText="Сохранить"
@@ -152,7 +186,7 @@ function App() {
             required
           />
           <span className="popup__input-error aboutname-error"></span>
-        </PopupWithForm>
+        </PopupWithForm> */}
 
         <PopupWithForm
           name="popup-add"

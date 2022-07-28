@@ -8,9 +8,6 @@ function Main({
   onEditProfile,
   onCardClick,
   cards,
-  // userName,
-  // userDescription,
-  // userAvatar,
   handleCardLike,
   handleCardDelete,
 }) {
@@ -20,12 +17,7 @@ function Main({
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar-container">
-            <img
-              className="profile__avatar"
-              alt=""
-              src={currentUser.avatar}
-              // style={{ backgroundImage: `url(${userAvatar})` }}
-            />
+            <img className="profile__avatar" alt="" src={currentUser.avatar} />
             <button
               type="button"
               className="profile__button-avatar-edit"
