@@ -41,7 +41,6 @@ function Card(props) {
         <div className="elements__like-container">
           <button
             type="button"
-            // className="elements__icon-like"
             className={cardLikeButtonClassName}
             onClick={handleLikeClick}
           ></button>
@@ -51,7 +50,6 @@ function Card(props) {
         </div>
       </div>
       <button
-        // className="elements__icon-delete"
         className={cardDeleteButtonClassName}
         onClick={handleDeleteClick}
       ></button>
