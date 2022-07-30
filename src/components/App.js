@@ -1,23 +1,25 @@
-import React from "react";
+// import React from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
+// import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+// import ConfirmDeletePopup from "./ConfirmDeletePopup";
 
 function App() {
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [cards, setCards] = React.useState([]);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  // const [isConfirmDeletePopup, setConfirmDeletePopup] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [cards, setCards] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -31,10 +33,15 @@ function App() {
     setAddPlacePopupOpen(true);
   }
 
+  // function handleConfirmDeleteClick() {
+  //   setConfirmDeletePopup(true);
+  // }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    // setConfirmDeletePopup(false);
     setSelectedCard(null);
   }
 
@@ -56,11 +63,20 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  // Если в проекте не реализован попап подтверждения удаления карточки, то сохранение стейта карточек следует выполнять через колбэк-функцию,
+  // как сохраняются данные лайка карточки. Сейчас, если у пользователя будет низкая скорость интернета,
+  // и он начнёт удалять подряд несколько карточек, к примеру 3 карточки, то при удалении со страницы второй карточки,
+  // предыдущая удалённая снова появится на странице.
+  // После удаления третьей появится вторая. То есть со страницы удалится только третья.
+  // Это связано с тем, что cards берется во время выполнения из замыкания, а так как операция выполняется асинхронно,
+  // то при удалении каждой карточки в setCards будет передаваться разный cards,
+  // пример: setState(prevState=> prevState.filter())
+
   function handleCardDelete(card) {
     api
       .delete(card._id)
       .then(() => {
-        setCards(cards.filter((item) => item !== card));
+        setCards((prevCards) => prevCards.filter((item) => item !== card));
       })
       .catch((err) => console.log(err));
   }
@@ -95,7 +111,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .getUserInfo()
       .then((data) => {
@@ -104,7 +120,7 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .getInitialCards()
       .then((data) => {
@@ -121,6 +137,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          // onConfirmDelete={handleConfirmDeleteClick}
           onCardClick={onCardClick}
           cards={cards}
           handleCardLike={handleCardLike}
@@ -146,11 +163,17 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
+        {/* <ConfirmDeletePopup
+          isOpen={isConfirmDeletePopup}
+          onClose={closeAllPopups}
+          onDeleteCard={handleCardDelete}
+        /> */}
+
+        {/* <PopupWithForm
           name="popup-confirm"
           title="Вы уверены?"
           buttonText="Да"
-        />
+        /> */}
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>

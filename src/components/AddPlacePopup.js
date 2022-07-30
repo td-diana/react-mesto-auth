@@ -21,6 +21,11 @@ function AddPlacePopup(props) {
     });
   }
 
+  React.useEffect(() => {
+    setName("");
+    setLink("");
+  }, [props.isOpen]);
+
   return (
     <PopupWithForm
       name="popup-add"
@@ -40,6 +45,7 @@ function AddPlacePopup(props) {
         maxLength="30"
         required
         onChange={handleNameChange}
+        value={name}
       />
       <span className="popup__input-error title-error"></span>
       <input
@@ -50,6 +56,7 @@ function AddPlacePopup(props) {
         placeholder="Ссылка на картинку"
         required
         onChange={handleLinkChange}
+        value={link}
       />
       <span className="popup__input-error url-error"></span>
     </PopupWithForm>
