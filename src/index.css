@@ -62,3 +62,6 @@
 @import url(./blocks/profile/__avatar-container/profile__avatar-container.css);
 
 @import url(./blocks/elements/__icon-delete/_status/elements__icon-delete_status_hidden.css);
+
+@import url(./blocks/popup/__overlay/popup__overlay.css);
+@import url(./blocks/popup/__img/popup__img.css);

@@ -1,23 +1,23 @@
-// import React from "react";
-// import PopupWithForm from "./PopupWithForm";
+import React from "react";
+import PopupWithForm from "./PopupWithForm";
 
-// function ConfirmDeletePopup(props) {
+function ConfirmDeletePopup({isOpen, onClose, onSubmit}) {
 
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     props.onDeleteCard();    
-//   }
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit();    
+  }
 
-//   return (
-//     <PopupWithForm
-//       name="popup-confirm"
-//       title="Вы уверены?"
-//       buttonText="Да"      
-//       isOpen={props.isOpen}
-//       onClose={props.onClose}
-//       onSubmit={handleSubmit}
-//     />
-//   );
-// }
+  return (
+    <PopupWithForm
+      name="popup-confirm"
+      title="Вы уверены?"
+      buttonText="Да"      
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    />
+  );
+}
 
-// export default ConfirmDeletePopup;
+export default ConfirmDeletePopup;
