@@ -1,23 +1,19 @@
-function ImagePopup({ card, onClose, isOpen }) {
+import React from "react";
+import Popup from "./Popup";
+
+function ImagePopup({ isOpen, onClose, card, isImagePopup }) {
   return (
-    <div className={`popup popup__img ${isOpen && "popup_opened"}`}>
-      <div className="popup__overlay" onClick={onClose}></div>      
-      <div className="popup__container-img">
-        <div className="popup__img-box">
-          <img
-            src={card?.link}
-            className="popup__images"
-            alt={card ? card.name : ""}
-          />
-          <p className="popup__title-img">{card ? card.name : ""}</p>
-        </div>
-        <button
-          type="button"
-          className="popup__button-close"
-          onClick={onClose}
-        ></button>
+    <Popup
+      isOpen={isOpen}
+      onClose={onClose}
+      isImagePopup={isImagePopup}
+      namePopup="popup-image"
+    >
+      <div className="popup__img-box">
+        <img src={card.link} className="popup__images" alt={card.name} />
+        <p className="popup__title-img">{card.name}</p>
       </div>
-    </div>
+    </Popup>
   );
 }
 

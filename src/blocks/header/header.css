@@ -1,6 +1,6 @@
 .header {
   max-width: 880px;
-  margin: 0 auto;
+  margin: 0px auto;
   padding-top: 45px;
   /* padding-bottom: 40px; */
   /* margin: 45px auto 40px; */
@@ -16,8 +16,8 @@ header:after {
   border: 1px solid #545454;
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 880px) {
   .header {
-    margin: 28px 0 42px;
+    margin: 0px 40px;
   }
 }

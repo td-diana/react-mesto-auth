@@ -1,6 +1,6 @@
 .popup__container-img {
-  /* max-width: 75vw;
-  color: white;
-  background-color: transparent; */
-  position: relative;
+  max-width: 75vw; 
+  background-color: transparent;
+  position: relative;   
+  display: flex;  
 }

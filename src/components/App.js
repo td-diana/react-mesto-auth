@@ -16,7 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
@@ -42,8 +42,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setConfirmDeletePopupOpen(false);
-    setImagePopupOpen(false);
-    setSelectedCard(null);
+    setImagePopupOpen(false);    
   }
 
   function onCardClick(card) {
@@ -65,17 +64,16 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleCardDelete() {
+  const handleCardDelete = () => {        
     api
       .delete(selectedCard._id)
       .then(() => {
-        setCards((prevCards) =>
-          prevCards.filter((item) => item._id !== selectedCard._id)
-        );
+        const newCards = cards.filter((item) => item._id !== selectedCard._id);
+        setCards(newCards);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   function onUpdateUser(userData) {
     api
@@ -144,30 +142,35 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={onUpdateAvatar}
+         
         />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={onUpdateUser}
+          
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
+          onAddPlace={handleAddPlaceSubmit}          
+         
         />
 
         <ConfirmDeletePopup
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDelete}
+         
         />
 
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
+          isImagePopup={selectedCard}          
         />
       </div>
     </CurrentUserContext.Provider>
