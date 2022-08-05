@@ -16,9 +16,15 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = useState(false);
+
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+
+  const [isLoadingAvatarPopup, setLoadingAvatarPopup] = useState(false);
+  const [isLoadingEditPopup, setLoadingEditPopup] = useState(false);
+  const [isLoadingAddPopup, setLoadingAddPopup] = useState(false);
+  const [isLoadingDeletePopup, setLoadingDeletePopup] = useState(false);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -37,17 +43,17 @@ function App() {
     setConfirmDeletePopupOpen(true);
   }
 
+  function onCardClick(card) {
+    setSelectedCard(card);
+    setImagePopupOpen(true);
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setConfirmDeletePopupOpen(false);
-    setImagePopupOpen(false);    
-  }
-
-  function onCardClick(card) {
-    setSelectedCard(card);
-    setImagePopupOpen(true);
+    setImagePopupOpen(false);
   }
 
   function handleCardLike(card) {
@@ -64,7 +70,8 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  const handleCardDelete = () => {        
+  const handleCardDelete = () => {
+    setLoadingDeletePopup(true);
     api
       .delete(selectedCard._id)
       .then(() => {
@@ -72,37 +79,56 @@ function App() {
         setCards(newCards);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoadingDeletePopup(false);
+      });
   };
 
   function onUpdateUser(userData) {
+    setLoadingEditPopup(true);
     api
       .setUserInfoApi(userData)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoadingEditPopup(false);
+      });
   }
 
   function onUpdateAvatar(userData) {
+    setLoadingAvatarPopup(true);
     api
       .handleUserAvatar(userData)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoadingAvatarPopup(false);
+      });
   }
 
   function handleAddPlaceSubmit(cardData) {
+    setLoadingAddPopup(true);
     api
       .addUserCard(cardData)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoadingAddPopup(false);
+      });
   }
 
   useEffect(() => {
@@ -142,35 +168,35 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={onUpdateAvatar}
-         
+          isLoading={isLoadingAvatarPopup}
         />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={onUpdateUser}
-          
+          isLoading={isLoadingEditPopup}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}          
-         
+          onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoadingAddPopup}
         />
 
         <ConfirmDeletePopup
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDelete}
-         
+          isLoading={isLoadingDeletePopup}
         />
 
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
-          isImagePopup={selectedCard}          
+          isImagePopup={selectedCard}
         />
       </div>
     </CurrentUserContext.Provider>

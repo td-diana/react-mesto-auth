@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function ConfirmDeletePopup({ isOpen, onClose, onSubmit }) {
+function ConfirmDeletePopup({ isOpen, onClose, onSubmit, isLoading }) {
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit();
@@ -15,6 +15,8 @@ function ConfirmDeletePopup({ isOpen, onClose, onSubmit }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
+      loadingTextBtn="Удаление..."
     />
   );
 }
