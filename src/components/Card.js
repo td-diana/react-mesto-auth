@@ -3,8 +3,10 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
+
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner._id === currentUser._id;
+
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
   // Создаём переменную для кнопки удаления
@@ -35,7 +37,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         className="elements__img"
         alt={card.name}
         onClick={handleCardClick}
+        title="Открыть фото"
       />
+
       <div className="elements__inner-container">
         <h2 className="elements__title">{card.name}</h2>
         <div className="elements__like-container">
@@ -51,6 +55,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         type="button"
         className={cardDeleteButtonClassName}
         onClick={handleDeleteClick}
+        title="Удалить фото"
       ></button>
     </li>
   );

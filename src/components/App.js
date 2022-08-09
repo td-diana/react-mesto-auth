@@ -18,6 +18,7 @@ function App() {
   const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
+
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
@@ -25,6 +26,24 @@ function App() {
   const [isLoadingEditPopup, setLoadingEditPopup] = useState(false);
   const [isLoadingAddPopup, setLoadingAddPopup] = useState(false);
   const [isLoadingDeletePopup, setLoadingDeletePopup] = useState(false);
+
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -130,24 +149,6 @@ function App() {
         setLoadingAddPopup(false);
       });
   }
-
-  useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

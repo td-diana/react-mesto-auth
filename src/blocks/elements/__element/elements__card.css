@@ -1,20 +1,13 @@
-/* .elements__card {
-  background: #ffffff;
-  border-radius: 10px;
-  border-color: #000;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-} */
-
 .elements__card {
-  background: #fff;
-  border-color: #000;
+  background-color: #fff;
   border-radius: 10px;
-  display: grid;
-  grid-template-rows: 282px 1fr;
+  /* display: grid;
+  grid-template-rows: 282px 1fr; */
   margin: 0 auto;
   max-width: 282px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }

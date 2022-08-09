@@ -11,13 +11,13 @@ function Main({
   handleCardLike,
   onCardDelete,
 }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const { name, about, avatar } = React.useContext(CurrentUserContext);
   return (
     <main>
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar-container">
-            <img className="profile__avatar" alt="" src={currentUser.avatar} />
+            <img className="profile__avatar" alt="Фото профиля" src={avatar} />
             <button
               type="button"
               className="profile__button-avatar-edit"
@@ -27,19 +27,20 @@ function Main({
         </div>
         <div className="profile__info">
           <div className="profile__container">
-            <h1 className="profile__name">{currentUser.name}</h1>
+            <h1 className="profile__name">{name}</h1>
             <button
               type="button"
               className="profile__button-edit"
               onClick={onEditProfile}
             ></button>
           </div>
-          <h2 className="profile__about-name">{currentUser.about}</h2>
+          <h2 className="profile__about-name">{about}</h2>
         </div>
         <button
           type="button"
           className="profile__button-add"
           onClick={onAddPlace}
+          title="Добавить фото"
         ></button>
       </section>
 
