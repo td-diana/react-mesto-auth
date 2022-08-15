@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -9,6 +10,10 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import Login from "./Login";
+import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -16,9 +21,9 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
-
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
@@ -26,6 +31,8 @@ function App() {
   const [isLoadingEditPopup, setLoadingEditPopup] = useState(false);
   const [isLoadingAddPopup, setLoadingAddPopup] = useState(false);
   const [isLoadingDeletePopup, setLoadingDeletePopup] = useState(false);
+
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -73,6 +80,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setConfirmDeletePopupOpen(false);
     setImagePopupOpen(false);
+    setInfoTooltipOpen(false);
   }
 
   function handleCardLike(card) {
@@ -154,7 +162,14 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main
+
+        <Routes>
+          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-up" element={<Register />} />
+        </Routes>
+
+        <ProtectedRoute
+          element={<Main />}
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -162,6 +177,7 @@ function App() {
           onCardClick={onCardClick}
           cards={cards}
           handleCardLike={handleCardLike}
+          loggedIn={loggedIn}
         />
         <Footer />
 
@@ -198,6 +214,11 @@ function App() {
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
           isImagePopup={selectedCard}
+        />
+        <InfoTooltip
+          namePopup="infoTool"
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
         />
       </div>
     </CurrentUserContext.Provider>

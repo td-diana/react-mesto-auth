@@ -10,7 +10,7 @@ function Main({
   cards,
   handleCardLike,
   onCardDelete,
-}) {
+}) {  
   const { name, about, avatar } = React.useContext(CurrentUserContext);
   return (
     <main>
