@@ -5,3 +5,7 @@
     font-size: 18px;
     line-height: 22px;    
   }
+
+  .header__title-auth:hover {
+    opacity: 0.8;
+  }

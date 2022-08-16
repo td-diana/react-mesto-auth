@@ -5,3 +5,9 @@
   margin: 0 auto;
   max-width: 358px;
 }
+
+@media screen and (max-width: 600px) {
+  .login {
+    max-width: 250px;
+  }
+}
