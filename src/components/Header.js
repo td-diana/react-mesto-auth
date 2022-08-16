@@ -1,17 +1,43 @@
-import React from "react";
-import { Route, Link, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-function Header() {
+function Header({ userEmail, onLogOut }) {
   return (
     <header className="header">
       <div className="header__logo"></div>
-   
-    <Link to="/sign-in" className="header__title-auth">
-        Войти
-      </Link>
-      <Link to="/sign-up" className="header__title-auth">
-        Регистрация
-      </Link>  
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="header__login-container">
+              <p className="header__email">{userEmail}</p>
+              <Link
+                className="header__link-exit"
+                to="/sign-in"
+                onClick={onLogOut}
+              >
+                Выйти
+              </Link>
+            </div>
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={
+            <Link className="header__title-auth" to="/sign-in">
+              Вход
+            </Link>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <Link className="header__title-auth" to="/sign-up">
+              Регистрация
+            </Link>
+          }
+        />
+      </Routes>
     </header>
   );
 }

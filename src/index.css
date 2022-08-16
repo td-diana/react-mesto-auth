@@ -76,3 +76,7 @@
 @import url(./blocks/tooltip/tooltip.css);
 @import url(./blocks/tooltip/__img/tooltip__img.css);
 @import url(./blocks/tooltip/__caption/tooltip__caption.css);
+
+@import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__link-exit/header__link-exit.css);
+@import url(./blocks/header/__login-container/header__login-container.css);

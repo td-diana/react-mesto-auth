@@ -1,27 +1,27 @@
 import React from "react";
 
-function AuthForm({ title, emailValue, passwordValue, submitName, onChange }) {
+function AuthForm({ title, submit, email, password, submitName, onChange }) {
   return (
     <div className="login">
       <h2 className="login__title">{title}</h2>
-      <form className="login__form">
+      <form className="login__form" onSubmit={submit}>
         <input
           className="login__input"
           placeholder="Email"
-          value={emailValue}
+          value={email}
           type="email"
           name="email"
-          id="email"
           required
           onChange={onChange}
         />
         <input
           className="login__input"
           placeholder="Пароль"
-          value={passwordValue}
+          value={password}
           type="password"
           name="password"
-          id="password"
+          autoComplete="off"
+          minLength="5"
           required
           onChange={onChange}
         />

@@ -1,39 +1,40 @@
-import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import AuthForm from "./AuthForm";
-import { Link } from 'react-router-dom';
 
-function Register({ onRegister }) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+function Register({ handleRegister }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  function handleChange(e) {
-    if (e.target.name === "email") {
-      setEmail(e.target.value);
-    } else if (e.target.name === "password") {
-      setPassword(e.target.value);
+  function handleChange(evt) {
+    if (evt.target.name === "email") {
+      setEmail(evt.target.value);
+    } else if (evt.target.name === "password") {
+      setPassword(evt.target.value);
     }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onRegister(email, password);
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleRegister(email, password);
   }
+
   return (
     <>
-    <AuthForm      
-      title="Регистрация"
-      submitName="Зарегистрироваться"
-      submit={handleSubmit}
-      onChange={handleChange}
-      emailValue={email}
-      passwordValue={password}
-    />
-    <div className="login__details">
+      <AuthForm
+        title="Регистрация"
+        submitName="Зарегистрироваться"
+        submit={handleSubmit}
+        onChange={handleChange}
+        email={email}
+        password={password}
+      />
+      <div className="login__details">
         <Link to="/sign-in" className="login__link">
           Уже зарегистрированы? Войти
         </Link>
       </div>
-      </>
+    </>
   );
 }
 

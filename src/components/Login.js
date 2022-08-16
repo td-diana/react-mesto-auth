@@ -1,33 +1,33 @@
-import React from "react";
+import { useState } from "react";
 import AuthForm from "./AuthForm";
 
-function Login({ onLogin }) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+function Login({ handleLogin }) {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  function handleChande(e) {
-    if (e.target.name === "email") {
-      setEmail(e.target.value);
-    } else if (e.target.name === "password") {
-      setPassword(e.target.value);
-    }
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) {
-      return;
-    }
-    onLogin(email, password);
+    handleLogin(data);
   }
 
   return (
     <AuthForm
+      title="Вход"
       submit={handleSubmit}
-      onChange={handleChande}
+      onChange={handleChange}
       submitName="Войти"
-      emailValue={email}
-      passwordValue={password}
+      email={data.email}
+      password={data.password}
     />
   );
 }

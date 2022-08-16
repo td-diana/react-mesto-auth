@@ -1,7 +1,6 @@
-import React from "react";
 import Popup from "./Popup";
 import successPicture from "../images/failure.svg";
-import rejectPicture from "../images/success.svg";
+import failurePicture from "../images/success.svg";
 
 function InfoTooltip({ namePopup, isOpen, onClose, isSuccess }) {
   return (
@@ -9,8 +8,8 @@ function InfoTooltip({ namePopup, isOpen, onClose, isSuccess }) {
       <div className="tooltip">
         <img
           className="tooltip__img"
-          src={isSuccess ? successPicture : rejectPicture}
-          alt="Статус о регистрации"
+          src={isSuccess ? failurePicture : successPicture}
+          alt="cтатус регистрации"
         />
         <div className="tooltip__caption">
           {isSuccess
