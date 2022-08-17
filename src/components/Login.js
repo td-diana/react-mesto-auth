@@ -28,6 +28,7 @@ function Login({ handleLogin }) {
       submitName="Войти"
       email={data.email}
       password={data.password}
+      nameForm="login"
     />
   );
 }

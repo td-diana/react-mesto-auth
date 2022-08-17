@@ -28,6 +28,7 @@ function Register({ handleRegister }) {
         onChange={handleChange}
         email={email}
         password={password}
+        nameForm="register"
       />
       <div className="login__details">
         <Link to="/sign-in" className="login__link">

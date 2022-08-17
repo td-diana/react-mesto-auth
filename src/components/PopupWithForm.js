@@ -1,8 +1,8 @@
 import React from "react";
 import Popup from "./Popup";
 
-function PopupWithForm({
-  name,
+function PopupWithForm({  
+  nameForm,
   namePopup,
   isOpen,
   onClose,
@@ -17,7 +17,7 @@ function PopupWithForm({
 }) {
   return (
     <Popup isOpen={isOpen} namePopup={namePopup} onClose={onClose} id={id}>
-      <form className="popup__form" name={name} noValidate onSubmit={onSubmit}>
+      <form className="popup__form" name={nameForm} noValidate onSubmit={onSubmit}>
         <h2 className="popup__title">{title}</h2>
         {children}
         <fieldset className="popup__field">
