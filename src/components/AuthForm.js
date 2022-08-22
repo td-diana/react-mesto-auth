@@ -1,6 +1,14 @@
 import React from "react";
 
-function AuthForm({ title, submit, email, password, submitName, onChange, nameForm }) {
+function AuthForm({
+  title,
+  submit,
+  email,
+  password,
+  submitName,
+  onChange,
+  nameForm,
+}) {
   return (
     <div className="login">
       <h2 className="login__title">{title}</h2>

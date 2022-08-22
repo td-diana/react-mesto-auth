@@ -2,7 +2,7 @@
   width: 142px;
   height: 33px;
   margin-bottom: 41px;
-  background-image: url(../../../images/logo.png);
+  /* background-image: url(../../../images/logo.png); */
 }
 
 @media screen and (max-width: 660px) {

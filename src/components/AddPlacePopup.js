@@ -18,7 +18,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose, isLoading }) {
   return (
     <PopupWithForm
       namePopup="add"
-      nameForm="add"      
+      nameForm="add"
       id="add"
       title="Новое место"
       buttonText="Создать"
@@ -33,7 +33,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose, isLoading }) {
         name="name"
         id="title"
         type="text"
-        className="popup__input popup__field-title"
+        className="popup__input"
         placeholder="Название"
         minLength="2"
         maxLength="30"
@@ -44,7 +44,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose, isLoading }) {
       <span
         className={`${
           errors.name
-            ? "popup__input-error popup__input-error_active title-error"
+            ? "popup__input-error popup__input-error_active"
             : "popup__input-error"
         }`}
       >
@@ -55,7 +55,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose, isLoading }) {
         name="link"
         id="url"
         type="url"
-        className="popup__input popup__field-url"
+        className="popup__input"
         placeholder="Ссылка на картинку"
         required
         value={values.link || ""}
@@ -64,7 +64,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose, isLoading }) {
       <span
         className={`${
           errors.link
-            ? "popup__input-error popup__input-error_active url-error"
+            ? "popup__input-error popup__input-error_active"
             : "popup__input-error"
         }`}
       >
