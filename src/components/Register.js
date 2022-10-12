@@ -16,7 +16,7 @@ function Register({ handleRegister }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleRegister(email, password);
+    handleRegister({ email, password });
   }
 
   return (

@@ -1,23 +1,21 @@
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 
-function Login({ handleLogin }) {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+function Login({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  function handleChange(evt) {
+    if (evt.target.name === "email") {
+      setEmail(evt.target.value);
+    } else if (evt.target.name === "password") {
+      setPassword(evt.target.value);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleLogin(data);
+    onLogin({ email, password });
   }
 
   return (
@@ -26,8 +24,8 @@ function Login({ handleLogin }) {
       submit={handleSubmit}
       onChange={handleChange}
       submitName="Войти"
-      email={data.email}
-      password={data.password}
+      email={email}
+      password={password}
       nameForm="login"
     />
   );

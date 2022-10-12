@@ -1,87 +1,119 @@
+const onError = res => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
+
 class Api {
-  constructor(options) {
-    this._url = options.url;
-    this._headers = options.headers;
+  constructor({baseUrl, headers}) {
+    this._url = baseUrl;
+    this._headers = headers;
   }
 
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+  _getHeaders() {
+    const jwt = localStorage.getItem('jwt');
+    return {
+      'Authorization': `Bearer ${jwt}`,
+      ...this._headers,
+    };
   }
 
-  getUserInfo() {
-    return fetch(this._url + "/users/me", {
-      method: "GET",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
+  // получаем карточки с сервера
   getInitialCards() {
-    return fetch(this._url + "/cards", {
-      method: "GET",
-      headers: this._headers,
-    }).then(this._checkResponse);
+    return fetch(`${this._url}/cards`, {
+      method: 'GET',
+      headers: this._getHeaders()
+    })
+      .then(onError);
   }
 
-  setUserInfoApi(userData) {
-    return fetch(this._url + "/users/me", {
-      method: "PATCH",
-      headers: this._headers,
+  // получаем данные о пользователе с сервера
+  getUserInfo() {  
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: this._getHeaders()
+    })
+      .then(onError);
+  }
+
+  // если оба промиса зарезолвены - верни массив этих промисов
+  getAllNeededData() { 
+    return Promise.all([this.getUserInfo(), this.getInitialCards()])
+  }
+
+  // записываем данные пользователя на сервер
+  setUserInfoApi(info) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._getHeaders(),
       body: JSON.stringify({
-        name: userData.name,
-        about: userData.about,
-      }),
-    }).then(this._checkResponse);
+        name: info.name,
+        about: info.about
+      })
+    })
+    .then(onError)
   }
 
-  addUserCard(data) {
-    return fetch(this._url + "/cards", {
-      method: "POST",
-      headers: this._headers,
+  // добавляем карточку на сервер
+  addUserCard(data) { 
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._getHeaders(),
       body: JSON.stringify({
         name: data.name,
-        link: data.link,
-      }),
-    }).then(this._checkResponse);
+        link: data.link
+      })
+    })
+      .then(onError);
   }
 
-  changeLikeCardStatus(id, isLiked) {
-    return fetch(this._url + `/cards/likes/${id}`, {
-      method: `${isLiked ? "PUT" : "DELETE"}`,
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  delete(id) {
-    return fetch(this._url + `/cards/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  handleUserAvatar(data) {
-    return fetch(this._url + `/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
+  // записываем аватарку на сервер
+  handleUserAvatar(input) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._getHeaders(),
       body: JSON.stringify({
-        avatar: data.avatar,
-      }),
-    }).then(this._checkResponse);
+        avatar: input.avatar
+      })
+    })
+    .then(onError)
   }
 
-  getAllNeededData() {
-    return Promise.all([this.getInitialCards(), this.getUserInfo()]);
+  // отправляем лайк на сервер
+  setLike(data) { 
+    return fetch(`${this._url}/cards/${data._id}/likes`, {
+      method: 'PUT',
+      headers: this._getHeaders()
+    })
+      .then(onError);
+  }
+
+  // убираем лайк с сервера
+  deleteLike(data) { 
+    return fetch(`${this._url}/cards/${data._id}/likes`, {
+      method: 'DELETE',
+      headers: this._getHeaders()
+    })
+      .then(onError);
+  }
+
+  // удаление карточки
+  deleteCard(data) {
+    return fetch(`${this._url}/cards/${data._id}`, {
+      method: 'DELETE',
+      headers: this._getHeaders()
+    })
+      .then(onError);
   }
 }
 
 const api = new Api({
-  url: "https://nomoreparties.co/v1/cohort-44",
+  baseUrl: 'https://api.td-diana.nomoredomains.icu',
   headers: {
-    authorization: "cd3dfc8b-e143-41af-a84b-cea0d68401cf",
-    "Content-Type": "application/json",
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
 export default api;

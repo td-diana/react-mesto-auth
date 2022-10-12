@@ -14,7 +14,9 @@ function ConfirmDeletePopup({ isOpen, onClose, onSubmit, isLoading }) {
       buttonText="Да"
       isOpen={isOpen}
       onClose={onClose}
+
       onSubmit={handleSubmit}
+      
       isLoading={isLoading}
       loadingTextBtn="Удаление..."
     />

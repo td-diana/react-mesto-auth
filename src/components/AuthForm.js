@@ -16,7 +16,7 @@ function AuthForm({
         <input
           className="login__input"
           placeholder="Email"
-          value={email}
+          value={email}          
           type="email"
           name="email"
           required
